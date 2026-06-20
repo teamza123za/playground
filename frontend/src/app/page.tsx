@@ -15,14 +15,14 @@ export default function Home() {
                 <h1 className="text-5xl font-extrabold tracking-tight text-slate-900 md:text-7xl">
                     Welcome to
                     <span className="block bg-gradient-to-r from-blue-600 to-sky-400 bg-clip-text text-transparent">
-                        Playground
+                        Slowwork
                     </span>
                 </h1>
 
                 <div className="mx-auto my-8 h-1 w-24 rounded-full bg-gradient-to-r from-blue-400 to-sky-300" />
 
                 <p className="mx-auto max-w-2xl text-lg leading-8 text-slate-600 md:text-xl">
-                    ยินดีต้อนรับสู่ Playground
+                    ยินดีต้อนรับสู่ Slowwork
                     พื้นที่สำหรับทดลอง พัฒนา และสร้างสรรค์ไอเดียใหม่ ๆ
                     ด้วย Next.js, TypeScript และเทคโนโลยีสมัยใหม่
                 </p>
