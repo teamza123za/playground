@@ -27,7 +27,7 @@ export default function Home() {
 
     return (
         <main className="p-10">
-            <h1 className="text-3xl font-bold">Playground Users 01</h1>
+            <h1 className="text-3xl font-bold">Playground Users 02</h1>
 
             <div className="mt-5 rounded border p-4">
                 {users.map((user) => (
