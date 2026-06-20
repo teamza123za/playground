@@ -1,0 +1,12 @@
+node_modules/
+.next/
+
+frontend/node_modules/
+frontend/.next/
+frontend/.env.local
+
+backend/node_modules/
+backend/.env
+backend/dev.db
+backend/prisma/dev.db
+backend/src/generated/prisma
