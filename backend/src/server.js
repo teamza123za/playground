@@ -11,11 +11,14 @@ const app = express();
 
 app.use(
     cors({
-        origin: process.env.FRONTEND_URL,
+        origin: [
+            "http://localhost:3000",
+            "https://www.slowwork.site",
+            "https://slowwork.site",
+        ],
         credentials: true,
     }),
 );
-
 app.use(express.json());
 
 app.get("/", (req, res) => {
