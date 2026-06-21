@@ -20,7 +20,7 @@ export default function Navbar() {
             <Link href="/" className="relative z-10 flex items-center gap-3">
                 <div className="flex items-center justify-center overflow-hidden">
                     <Image
-                        src="/logo.png"
+                        src="/logo_new.png"
                         alt="Slowwork"
                         width={36}
                         height={36}
