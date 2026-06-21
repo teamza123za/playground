@@ -1,6 +1,7 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
+import { useLanguage } from "@/components/LanguageProvider";
 import { useMemo, useState } from "react";
 
 type ToolId =
@@ -17,8 +18,8 @@ type ToolId =
 
 type Tool = {
     id: ToolId;
-    name: string;
-    description: string;
+    nameKey: string;
+    descriptionKey: string;
     category: string;
     shortcut: string;
 };
@@ -26,71 +27,71 @@ type Tool = {
 const tools: Tool[] = [
     {
         id: "json",
-        name: "JSON Formatter",
-        description: "Format, minify, and validate JSON payloads.",
+        nameKey: "tool.json.name",
+        descriptionKey: "tool.json.desc",
         category: "Data",
         shortcut: "JS",
     },
     {
         id: "url",
-        name: "URL Encoder",
-        description: "Encode and decode query strings or URL fragments.",
+        nameKey: "tool.url.name",
+        descriptionKey: "tool.url.desc",
         category: "Web",
         shortcut: "URL",
     },
     {
         id: "base64",
-        name: "Base64",
-        description: "Convert plain text to and from Base64.",
+        nameKey: "tool.base64.name",
+        descriptionKey: "tool.base64.desc",
         category: "Encode",
         shortcut: "B64",
     },
     {
         id: "uuid",
-        name: "UUID Generator",
-        description: "Generate random UUID v4 values.",
+        nameKey: "tool.uuid.name",
+        descriptionKey: "tool.uuid.desc",
         category: "Generate",
         shortcut: "ID",
     },
     {
         id: "timestamp",
-        name: "Timestamp",
-        description: "Convert Unix timestamps and local date time.",
+        nameKey: "tool.timestamp.name",
+        descriptionKey: "tool.timestamp.desc",
         category: "Time",
         shortcut: "TS",
     },
     {
         id: "color",
-        name: "Color Converter",
-        description: "Convert HEX colors to RGB and HSL.",
+        nameKey: "tool.color.name",
+        descriptionKey: "tool.color.desc",
         category: "Design",
         shortcut: "HEX",
     },
     {
         id: "regex",
-        name: "Regex Tester",
-        description: "Test JavaScript regular expressions quickly.",
+        nameKey: "tool.regex.name",
+        descriptionKey: "tool.regex.desc",
         category: "Debug",
         shortcut: "RX",
     },
     {
         id: "hash",
-        name: "Hash Generator",
-        description: "Create SHA-256 hashes in the browser.",
+        nameKey: "tool.hash.name",
+        descriptionKey: "tool.hash.desc",
         category: "Crypto",
         shortcut: "SHA",
     },
     {
         id: "jwt",
-        name: "JWT Decoder",
-        description: "Decode JWT header and payload without verifying.",
+        nameKey: "tool.jwt.name",
+        descriptionKey: "tool.jwt.desc",
         category: "Auth",
         shortcut: "JWT",
     },
     {
         id: "case",
-        name: "Text Case",
-        description: "Transform text into common naming styles.",
+        nameKey: "tool.case.name",
+        descriptionKey: "tool.case.desc",
         category: "Text",
         shortcut: "Aa",
     },
@@ -296,24 +297,27 @@ function Button({
 }
 
 function Output({ value, label = "Result" }: { value: string; label?: string }) {
+    const { t } = useLanguage();
+
     return (
         <div className="overflow-hidden rounded-lg border border-slate-900/10 bg-slate-950 shadow-xl shadow-slate-950/10">
             <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
                 <span className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-400">
-                    {label}
+                    {label === "Result" ? t("dev.result") : label}
                 </span>
                 <span className="rounded-full bg-emerald-400/15 px-2.5 py-1 text-xs font-semibold text-emerald-300">
-                    Browser only
+                    {t("dev.browserOnly")}
                 </span>
             </div>
             <pre className="min-h-40 overflow-auto whitespace-pre-wrap p-4 font-mono text-sm leading-6 text-slate-100">
-                {value || "Output will appear here."}
+                {value || t("dev.outputPlaceholder")}
             </pre>
         </div>
     );
 }
 
 export default function DevToolsPage() {
+    const { t } = useLanguage();
     const [activeTool, setActiveTool] = useState<ToolId>("json");
     const [jsonInput, setJsonInput] = useState(sampleJson);
     const [jsonOutput, setJsonOutput] = useState("");
@@ -499,26 +503,24 @@ export default function DevToolsPage() {
 
             <Navbar />
 
-            <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-6 py-10">
+            <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-5 py-6 sm:py-8">
                 <header className="overflow-hidden rounded-lg border border-white/80 bg-white/55 shadow-2xl shadow-slate-900/10 backdrop-blur-xl">
-                    <div className="grid gap-6 p-6 lg:grid-cols-[1fr_420px] lg:p-8">
-                        <div className="flex flex-col justify-between gap-8">
+                    <div className="grid gap-5 p-5 lg:grid-cols-[1fr_380px] lg:p-6">
+                        <div className="flex flex-col justify-between gap-6">
                             <div>
                                 <p className="text-sm font-semibold uppercase tracking-[0.2em] text-blue-600">
-                                    Daily Developer Utilities
+                                    {t("dev.eyebrow")}
                                 </p>
-                                <h1 className="mt-3 text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl">
-                                    Dev Tools
+                                <h1 className="mt-3 text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
+                                    {t("dev.title")}
                                 </h1>
-                                <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600">
-                                    Ten practical browser tools for formatting,
-                                    encoding, generating, converting, and debugging
-                                    common developer data.
+                                <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600 sm:text-base">
+                                    {t("dev.copy")}
                                 </p>
                             </div>
 
                             <div className="flex flex-wrap gap-2">
-                                {["Private in browser", "No backend calls", "Fast daily utilities"].map(
+                                {[t("dev.private"), t("dev.noBackend"), t("dev.fast")].map(
                                     (item) => (
                                         <span
                                             key={item}
@@ -532,21 +534,21 @@ export default function DevToolsPage() {
                         </div>
 
                         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-1">
-                            <div className="rounded-lg border border-white/80 bg-slate-950 p-5 text-white shadow-xl shadow-slate-900/15">
+                            <div className="rounded-lg border border-white/80 bg-slate-950 p-4 text-white shadow-xl shadow-slate-900/15">
                                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-blue-200">
-                                    Active workspace
+                                    {t("dev.active")}
                                 </p>
-                                <p className="mt-3 truncate text-3xl font-semibold">
-                                    {active.name}
+                                <p className="mt-3 truncate text-2xl font-semibold">
+                                    {t(active.nameKey)}
                                 </p>
                                 <p className="mt-2 text-sm leading-6 text-slate-300">
-                                    {active.description}
+                                    {t(active.descriptionKey)}
                                 </p>
                             </div>
                             <div className="grid grid-cols-2 gap-3">
                                 <div className="rounded-lg border border-white/80 bg-white/75 px-4 py-3 shadow-sm backdrop-blur">
                                     <p className="text-xs font-medium text-slate-500">
-                                        Tools
+                                        {t("dev.tools")}
                                     </p>
                                     <p className="mt-1 text-2xl font-semibold">
                                         {tools.length}
@@ -554,7 +556,7 @@ export default function DevToolsPage() {
                                 </div>
                                 <div className="rounded-lg border border-white/80 bg-white/75 px-4 py-3 shadow-sm backdrop-blur">
                                     <p className="text-xs font-medium text-slate-500">
-                                        Category
+                                        {t("dev.category")}
                                     </p>
                                     <p className="mt-1 text-2xl font-semibold text-blue-700">
                                         {active.category}
@@ -565,15 +567,15 @@ export default function DevToolsPage() {
                     </div>
                 </header>
 
-                <section className="grid gap-6 lg:grid-cols-[360px_1fr]">
+                <section className="grid gap-5 lg:grid-cols-[320px_1fr]">
                     <aside className="h-fit rounded-lg border border-white/80 bg-white/55 p-3 shadow-xl shadow-slate-900/10 backdrop-blur-xl">
                         <div className="mb-3 flex items-center justify-between px-2 py-1">
                             <div>
                                 <p className="text-sm font-semibold text-slate-950">
-                                    Toolbox
+                                    {t("dev.toolbox")}
                                 </p>
                                 <p className="mt-1 text-xs text-slate-500">
-                                    Pick a utility to open its workspace.
+                                    {t("dev.toolboxCopy")}
                                 </p>
                             </div>
                         </div>
@@ -600,10 +602,10 @@ export default function DevToolsPage() {
                                     </span>
                                     <span className="min-w-0">
                                         <span className="block truncate text-sm font-semibold text-slate-950">
-                                            {tool.name}
+                                        {t(tool.nameKey)}
                                         </span>
                                         <span className="mt-1 block line-clamp-2 text-xs leading-5 text-slate-500">
-                                            {tool.description}
+                                            {t(tool.descriptionKey)}
                                         </span>
                                     </span>
                                     <span className="text-xs font-semibold text-slate-400">
@@ -626,10 +628,10 @@ export default function DevToolsPage() {
                                             {active.category}
                                         </p>
                                         <h2 className="mt-1 text-2xl font-semibold text-slate-950">
-                                            {active.name}
+                                            {t(active.nameKey)}
                                         </h2>
                                         <p className="mt-1 text-sm leading-6 text-slate-500">
-                                            {active.description}
+                                            {t(active.descriptionKey)}
                                         </p>
                                     </div>
                                 </div>
@@ -640,7 +642,7 @@ export default function DevToolsPage() {
                         {activeTool === "json" ? (
                             <div className="grid gap-5">
                                 <Field
-                                    label="JSON input"
+                                    label={t("dev.jsonInput")}
                                     hint={`${jsonInput.length} chars`}
                                 >
                                     <TextArea
@@ -649,33 +651,43 @@ export default function DevToolsPage() {
                                     />
                                 </Field>
                                 <div className="flex flex-wrap gap-3 rounded-lg border border-white/70 bg-white/45 p-3 backdrop-blur">
-                                    <Button onClick={formatJson}>Format</Button>
+                                    <Button onClick={formatJson}>
+                                        {t("dev.format")}
+                                    </Button>
                                     <Button onClick={minifyJson} variant="ghost">
-                                        Minify
+                                        {t("dev.minify")}
                                     </Button>
                                     <Button
                                         onClick={() => copyOutput(jsonOutput)}
                                         variant="ghost"
                                     >
-                                        Copy
+                                        {t("dev.copyButton")}
                                     </Button>
                                 </div>
-                                <Output value={jsonOutput} label="Formatted output" />
+                                <Output
+                                    value={jsonOutput}
+                                    label={t("dev.formattedOutput")}
+                                />
                             </div>
                         ) : null}
 
                         {activeTool === "url" ? (
                             <div className="grid gap-5">
-                                <Field label="URL text" hint="Encode or decode">
+                                <Field
+                                    label={t("dev.urlText")}
+                                    hint={t("dev.encodeOrDecode")}
+                                >
                                     <TextArea
                                         value={urlInput}
                                         onChange={setUrlInput}
                                     />
                                 </Field>
                                 <div className="flex flex-wrap gap-3 rounded-lg border border-white/70 bg-white/45 p-3 backdrop-blur">
-                                    <Button onClick={encodeUrl}>Encode</Button>
+                                    <Button onClick={encodeUrl}>
+                                        {t("dev.encode")}
+                                    </Button>
                                     <Button onClick={decodeUrl} variant="ghost">
-                                        Decode
+                                        {t("dev.decode")}
                                     </Button>
                                 </div>
                                 <Output value={urlOutput} />
@@ -684,16 +696,18 @@ export default function DevToolsPage() {
 
                         {activeTool === "base64" ? (
                             <div className="grid gap-5">
-                                <Field label="Text" hint="UTF-8 supported">
+                                <Field label={t("dev.text")} hint={t("dev.utf8")}>
                                     <TextArea
                                         value={baseInput}
                                         onChange={setBaseInput}
                                     />
                                 </Field>
                                 <div className="flex flex-wrap gap-3 rounded-lg border border-white/70 bg-white/45 p-3 backdrop-blur">
-                                    <Button onClick={encodeBase64}>Encode</Button>
+                                    <Button onClick={encodeBase64}>
+                                        {t("dev.encode")}
+                                    </Button>
                                     <Button onClick={decodeBase64} variant="ghost">
-                                        Decode
+                                        {t("dev.decode")}
                                     </Button>
                                 </div>
                                 <Output value={baseOutput} />
@@ -704,22 +718,21 @@ export default function DevToolsPage() {
                             <div className="grid gap-5">
                                 <div className="rounded-lg border border-white/70 bg-white/55 p-5 backdrop-blur">
                                     <p className="text-sm font-semibold text-slate-900">
-                                        Generate eight random UUID v4 values.
+                                        {t("dev.uuidCopy")}
                                     </p>
                                     <p className="mt-2 text-sm leading-6 text-slate-500">
-                                        Useful for fixtures, test records, and local
-                                        development data.
+                                        {t("dev.uuidHint")}
                                     </p>
                                 </div>
                                 <div className="flex flex-wrap gap-3 rounded-lg border border-white/70 bg-white/45 p-3 backdrop-blur">
                                     <Button onClick={generateUuids}>
-                                        Generate UUIDs
+                                        {t("dev.generateUuids")}
                                     </Button>
                                     <Button
                                         onClick={() => copyOutput(uuids.join("\n"))}
                                         variant="ghost"
                                     >
-                                        Copy
+                                        {t("dev.copyButton")}
                                     </Button>
                                 </div>
                                 <Output value={uuids.join("\n")} />
@@ -728,7 +741,10 @@ export default function DevToolsPage() {
 
                         {activeTool === "timestamp" ? (
                             <div className="grid gap-5">
-                                <Field label="Unix timestamp" hint="Seconds or milliseconds">
+                                <Field
+                                    label={t("dev.timestamp")}
+                                    hint={t("dev.secondsMs")}
+                                >
                                     <Input
                                         value={timestampInput}
                                         onChange={setTimestampInput}
@@ -737,10 +753,10 @@ export default function DevToolsPage() {
                                 </Field>
                                 <div className="flex flex-wrap gap-3 rounded-lg border border-white/70 bg-white/45 p-3 backdrop-blur">
                                     <Button onClick={convertTimestamp}>
-                                        Convert
+                                        {t("dev.convert")}
                                     </Button>
                                     <Button onClick={convertNow} variant="ghost">
-                                        Use now
+                                        {t("dev.useNow")}
                                     </Button>
                                 </div>
                                 <Output value={timestampOutput} />
@@ -749,7 +765,10 @@ export default function DevToolsPage() {
 
                         {activeTool === "color" ? (
                             <div className="grid gap-5">
-                                <Field label="HEX color" hint="3 or 6 digits">
+                                <Field
+                                    label={t("dev.hexColor")}
+                                    hint={t("dev.hexHint")}
+                                >
                                     <Input
                                         value={colorInput}
                                         onChange={setColorInput}
@@ -757,7 +776,9 @@ export default function DevToolsPage() {
                                     />
                                 </Field>
                                 <div className="flex flex-wrap items-center gap-3 rounded-lg border border-white/70 bg-white/45 p-3 backdrop-blur">
-                                    <Button onClick={convertColor}>Convert</Button>
+                                    <Button onClick={convertColor}>
+                                        {t("dev.convert")}
+                                    </Button>
                                     <div
                                         className="h-12 w-28 rounded-lg border border-white/80 shadow-inner shadow-slate-900/10"
                                         style={{ backgroundColor: colorInput }}
@@ -770,13 +791,16 @@ export default function DevToolsPage() {
                         {activeTool === "regex" ? (
                             <div className="grid gap-5">
                                 <div className="grid gap-4 md:grid-cols-[1fr_120px]">
-                                    <Field label="Pattern" hint="JavaScript regex">
+                                    <Field
+                                        label={t("dev.pattern")}
+                                        hint={t("dev.regexHint")}
+                                    >
                                         <Input
                                             value={regexPattern}
                                             onChange={setRegexPattern}
                                         />
                                     </Field>
-                                    <Field label="Flags" hint="g i m s u y">
+                                    <Field label={t("dev.flags")} hint="g i m s u y">
                                         <Input
                                             value={regexFlags}
                                             onChange={setRegexFlags}
@@ -784,14 +808,16 @@ export default function DevToolsPage() {
                                         />
                                     </Field>
                                 </div>
-                                <Field label="Text">
+                                <Field label={t("dev.text")}>
                                     <TextArea
                                         value={regexText}
                                         onChange={setRegexText}
                                     />
                                 </Field>
                                 <div className="flex flex-wrap gap-3 rounded-lg border border-white/70 bg-white/45 p-3 backdrop-blur">
-                                    <Button onClick={testRegex}>Test regex</Button>
+                                    <Button onClick={testRegex}>
+                                        {t("dev.testRegex")}
+                                    </Button>
                                 </div>
                                 <Output value={regexOutput} />
                             </div>
@@ -799,7 +825,7 @@ export default function DevToolsPage() {
 
                         {activeTool === "hash" ? (
                             <div className="grid gap-5">
-                                <Field label="Text" hint="SHA-256">
+                                <Field label={t("dev.text")} hint={t("dev.shaHint")}>
                                     <TextArea
                                         value={hashInput}
                                         onChange={setHashInput}
@@ -807,13 +833,13 @@ export default function DevToolsPage() {
                                 </Field>
                                 <div className="flex flex-wrap gap-3 rounded-lg border border-white/70 bg-white/45 p-3 backdrop-blur">
                                     <Button onClick={() => void generateHash()}>
-                                        Generate SHA-256
+                                        {t("dev.generateSha")}
                                     </Button>
                                     <Button
                                         onClick={() => copyOutput(hashOutput)}
                                         variant="ghost"
                                     >
-                                        Copy
+                                        {t("dev.copyButton")}
                                     </Button>
                                 </div>
                                 <Output value={hashOutput} />
@@ -822,7 +848,7 @@ export default function DevToolsPage() {
 
                         {activeTool === "jwt" ? (
                             <div className="grid gap-5">
-                                <Field label="JWT" hint="Decoded only, not verified">
+                                <Field label={t("dev.jwt")} hint={t("dev.jwtHint")}>
                                     <TextArea
                                         value={jwtInput}
                                         onChange={setJwtInput}
@@ -830,7 +856,9 @@ export default function DevToolsPage() {
                                     />
                                 </Field>
                                 <div className="flex flex-wrap gap-3 rounded-lg border border-white/70 bg-white/45 p-3 backdrop-blur">
-                                    <Button onClick={decodeJwt}>Decode JWT</Button>
+                                    <Button onClick={decodeJwt}>
+                                        {t("dev.decodeJwt")}
+                                    </Button>
                                 </div>
                                 <Output value={jwtOutput} />
                             </div>
@@ -838,7 +866,10 @@ export default function DevToolsPage() {
 
                         {activeTool === "case" ? (
                             <div className="grid gap-5">
-                                <Field label="Text" hint="Common naming styles">
+                                <Field
+                                    label={t("dev.text")}
+                                    hint={t("dev.caseHint")}
+                                >
                                     <TextArea
                                         value={caseInput}
                                         onChange={setCaseInput}

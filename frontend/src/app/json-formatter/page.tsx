@@ -1,6 +1,7 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
+import { useLanguage } from "@/components/LanguageProvider";
 import { useMemo, useState } from "react";
 
 const sampleJson = `{
@@ -15,6 +16,7 @@ const sampleJson = `{
 }`;
 
 export default function JsonFormatterPage() {
+    const { t } = useLanguage();
     const [input, setInput] = useState(sampleJson);
     const [output, setOutput] = useState("");
     const [error, setError] = useState("");
@@ -94,24 +96,24 @@ export default function JsonFormatterPage() {
 
             <Navbar />
 
-            <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-8 py-10">
-                <header className="flex flex-col justify-between gap-6 border-b border-white/70 pb-8 lg:flex-row lg:items-end">
+            <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col gap-6 py-8">
+                <header className="flex flex-col justify-between gap-5 border-b border-white/70 pb-6 lg:flex-row lg:items-end">
                     <div>
                         <p className="text-sm font-medium uppercase tracking-[0.18em] text-blue-600">
-                            Developer Tool
+                            {t("json.eyebrow")}
                         </p>
-                        <h1 className="mt-3 text-4xl font-semibold text-slate-950 sm:text-5xl">
-                            JSON Formatter
+                        <h1 className="mt-3 text-3xl font-semibold text-slate-950 sm:text-4xl">
+                            {t("json.title")}
                         </h1>
-                        <p className="mt-3 max-w-2xl text-base leading-7 text-slate-600">
-                            วาง JSON แล้วจัดรูปแบบ ตรวจสอบความถูกต้อง หรือบีบให้สั้นในหน้าเดียว
+                        <p className="mt-3 max-w-2xl text-sm leading-6 text-slate-600 sm:text-base">
+                            {t("json.copy")}
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-2 gap-2 sm:w-96">
+                    <div className="grid grid-cols-2 gap-2 sm:w-80">
                         <div className="rounded-lg border border-white/80 bg-white/85 px-4 py-3 shadow-sm backdrop-blur">
                             <p className="text-xs font-medium text-slate-500">
-                                Input lines
+                                {t("json.inputLines")}
                             </p>
                             <p className="mt-1 text-2xl font-semibold">
                                 {inputStats.lines}
@@ -119,7 +121,7 @@ export default function JsonFormatterPage() {
                         </div>
                         <div className="rounded-lg border border-white/80 bg-white/85 px-4 py-3 shadow-sm backdrop-blur">
                             <p className="text-xs font-medium text-slate-500">
-                                Output chars
+                                {t("json.outputChars")}
                             </p>
                             <p className="mt-1 text-2xl font-semibold text-blue-700">
                                 {outputStats.characters}
@@ -128,22 +130,22 @@ export default function JsonFormatterPage() {
                     </div>
                 </header>
 
-                <section className="grid gap-6 xl:grid-cols-[1fr_360px_1fr]">
-                    <div className="min-w-0 rounded-lg border border-white/80 bg-white/85 p-5 shadow-lg backdrop-blur-md">
+                <section className="grid gap-5 xl:grid-cols-[1fr_300px_1fr]">
+                    <div className="min-w-0 rounded-lg border border-white/80 bg-white/85 p-4 shadow-lg backdrop-blur-md">
                         <div className="mb-4 flex items-center justify-between gap-4">
                             <div>
                                 <h2 className="text-lg font-semibold text-slate-950">
-                                    Input JSON
+                                    {t("json.input")}
                                 </h2>
                                 <p className="mt-1 text-sm text-slate-500">
-                                    {inputStats.characters} characters
+                                    {inputStats.characters} {t("json.characters")}
                                 </p>
                             </div>
                             <button
                                 onClick={loadSample}
                                 className="h-10 rounded-lg border border-slate-300 bg-white px-4 text-sm font-semibold text-slate-700 transition hover:bg-slate-50 active:scale-[0.98]"
                             >
-                                Sample
+                                {t("json.sample")}
                             </button>
                         </div>
 
@@ -156,43 +158,43 @@ export default function JsonFormatterPage() {
                             }}
                             spellCheck={false}
                             placeholder='{"name":"Slowwork"}'
-                            className="min-h-[460px] w-full resize-y rounded-lg border border-slate-300 bg-white p-4 font-mono text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
+                            className="min-h-[360px] w-full resize-y rounded-lg border border-slate-300 bg-white p-4 font-mono text-sm leading-6 text-slate-900 outline-none transition placeholder:text-slate-400 focus:border-blue-600 focus:ring-4 focus:ring-blue-100"
                         />
                     </div>
 
-                    <aside className="h-fit rounded-lg border border-white/80 bg-white/85 p-5 shadow-lg backdrop-blur-md">
+                    <aside className="h-fit rounded-lg border border-white/80 bg-white/85 p-4 shadow-lg backdrop-blur-md">
                         <h2 className="text-lg font-semibold text-slate-950">
-                            Actions
+                            {t("json.actions")}
                         </h2>
                         <p className="mt-1 text-sm leading-6 text-slate-500">
-                            เลือกรูปแบบผลลัพธ์ที่ต้องการ แล้วคัดลอกไปใช้งานต่อได้ทันที
+                            {t("json.actionsCopy")}
                         </p>
 
                         <div className="mt-5 grid gap-3">
                             <button
                                 onClick={formatJson}
-                                className="h-12 rounded-lg bg-blue-600 px-5 text-sm font-semibold text-white shadow-md shadow-blue-100 transition hover:bg-blue-700 active:scale-[0.98]"
+                                className="h-11 rounded-lg bg-blue-600 px-5 text-sm font-semibold text-white shadow-md shadow-blue-100 transition hover:bg-blue-700 active:scale-[0.98]"
                             >
-                                Format JSON
+                                {t("json.format")}
                             </button>
                             <button
                                 onClick={minifyJson}
-                                className="h-12 rounded-lg bg-slate-950 px-5 text-sm font-semibold text-white shadow-md transition hover:bg-slate-800 active:scale-[0.98]"
+                                className="h-11 rounded-lg bg-slate-950 px-5 text-sm font-semibold text-white shadow-md transition hover:bg-slate-800 active:scale-[0.98]"
                             >
-                                Minify JSON
+                                {t("json.minify")}
                             </button>
                             <button
                                 onClick={copyOutput}
                                 disabled={!output}
-                                className="h-12 rounded-lg border border-emerald-200 bg-white px-5 text-sm font-semibold text-emerald-700 transition hover:border-emerald-300 hover:bg-emerald-50 active:scale-[0.98] disabled:cursor-not-allowed disabled:border-slate-200 disabled:text-slate-400 disabled:hover:bg-white"
+                                className="h-11 rounded-lg border border-emerald-200 bg-white px-5 text-sm font-semibold text-emerald-700 transition hover:border-emerald-300 hover:bg-emerald-50 active:scale-[0.98] disabled:cursor-not-allowed disabled:border-slate-200 disabled:text-slate-400 disabled:hover:bg-white"
                             >
-                                {copied ? "Copied" : "Copy Output"}
+                                {copied ? t("json.copied") : t("json.copyOutput")}
                             </button>
                             <button
                                 onClick={clearAll}
-                                className="h-12 rounded-lg border border-red-200 bg-white px-5 text-sm font-semibold text-red-600 transition hover:border-red-300 hover:bg-red-50 active:scale-[0.98]"
+                                className="h-11 rounded-lg border border-red-200 bg-white px-5 text-sm font-semibold text-red-600 transition hover:border-red-300 hover:bg-red-50 active:scale-[0.98]"
                             >
-                                Clear
+                                {t("json.clear")}
                             </button>
                         </div>
 
@@ -202,25 +204,25 @@ export default function JsonFormatterPage() {
                             </div>
                         ) : (
                             <div className="mt-5 rounded-lg border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm leading-6 text-emerald-700">
-                                JSON พร้อมตรวจสอบและจัดรูปแบบ
+                                {t("json.ready")}
                             </div>
                         )}
                     </aside>
 
-                    <div className="min-w-0 rounded-lg border border-white/80 bg-white/85 p-5 shadow-lg backdrop-blur-md">
+                    <div className="min-w-0 rounded-lg border border-white/80 bg-white/85 p-4 shadow-lg backdrop-blur-md">
                         <div className="mb-4 flex items-center justify-between gap-4">
                             <div>
                                 <h2 className="text-lg font-semibold text-slate-950">
-                                    Output
+                                    {t("json.output")}
                                 </h2>
                                 <p className="mt-1 text-sm text-slate-500">
-                                    {outputStats.lines} lines
+                                    {outputStats.lines} {t("json.lines")}
                                 </p>
                             </div>
                         </div>
 
-                        <pre className="min-h-[460px] overflow-auto rounded-lg border border-slate-300 bg-slate-950 p-4 font-mono text-sm leading-6 text-slate-100">
-                            {output || "Formatted JSON will appear here."}
+                        <pre className="min-h-[360px] overflow-auto rounded-lg border border-slate-300 bg-slate-950 p-4 font-mono text-sm leading-6 text-slate-100">
+                            {output || t("json.placeholder")}
                         </pre>
                     </div>
                 </section>
