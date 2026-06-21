@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 export default function Home() {
     return (
         <main className="relative min-h-screen overflow-hidden bg-[#fbfbfb] px-6">
@@ -10,8 +12,12 @@ export default function Home() {
 
             <nav className="relative z-10 mx-auto mt-4 flex max-w-7xl items-center justify-between rounded-full border border-white/80 bg-white/85 px-6 py-4 shadow-lg backdrop-blur-md">
                 <a href="/" className="flex items-center gap-3">
-                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-950 text-white shadow">
-                        <span className="text-lg font-bold">S</span>
+                    <div className="flex items-center justify-center overflow-hidden">
+                        <img
+                            src="/logo.png"
+                            alt="Slowwork"
+                            className="h-9 w-9"
+                        />
                     </div>
                     <span className="text-xl font-bold text-slate-900">
                         Slowwork
