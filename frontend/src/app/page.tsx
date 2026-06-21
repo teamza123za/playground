@@ -49,7 +49,7 @@ export default function Home() {
                 <h1 className="text-5xl font-extrabold tracking-tight text-slate-900 md:text-7xl">
                     Build better with
                     <span className="block bg-gradient-to-r from-blue-600 via-violet-500 to-pink-500 bg-clip-text text-transparent">
-                        Slowwork I Na Hee!
+                        Slowwork I Na Hee
                     </span>
                 </h1>
 
