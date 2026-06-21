@@ -16,7 +16,28 @@ const createTodo = async (title) => {
     });
 };
 
+const updateTodo = async (id, isDone) => {
+    return await prisma.todo.update({
+        where: {
+            id: Number(id),
+        },
+        data: {
+            isDone,
+        },
+    });
+};
+
+const deleteTodo = async (id) => {
+    return await prisma.todo.delete({
+        where: {
+            id: Number(id),
+        },
+    });
+};
+
 module.exports = {
     getTodos,
     createTodo,
+    updateTodo,
+    deleteTodo,
 };
