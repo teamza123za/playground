@@ -1,7 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import Link from "next/link";
+import Navbar from "@/components/Navbar";
 import { useEffect, useState } from "react";
 
 type Todo = {
@@ -92,41 +91,11 @@ export default function TodoPage() {
     const openCount = todos.length - completedCount;
 
     return (
-        <main className="relative min-h-screen overflow-hidden bg-[#fbfbfb] px-4 py-4 text-slate-950 sm:px-6 lg:px-8">
+        <main className="animated-surface relative min-h-screen overflow-hidden px-4 py-4 text-slate-950 sm:px-6 lg:px-8">
+            <div className="liquid-bg" />
             <div className="dot-bg" />
-            <div className="floating-blur floating-1" />
-            <div className="floating-blur floating-2" />
-            <div className="floating-blur floating-3" />
 
-            <nav className="relative z-10 mx-auto flex max-w-7xl items-center justify-between rounded-full border border-white/80 bg-white/85 px-5 py-4 shadow-lg backdrop-blur-md sm:px-6">
-                <Link href="/" className="flex items-center gap-3">
-                    <div className="flex items-center justify-center overflow-hidden">
-                        <Image
-                            src="/logo.png"
-                            alt="Slowwork"
-                            width={36}
-                            height={36}
-                            className="h-9 w-9"
-                            priority
-                        />
-                    </div>
-                    <span className="text-xl font-bold text-slate-900">
-                        Slowwork
-                    </span>
-                </Link>
-
-                <div className="hidden items-center gap-8 text-sm font-medium text-slate-700 md:flex">
-                    <Link href="/" className="transition hover:text-blue-600">
-                        Home
-                    </Link>
-                    <Link
-                        href="/todos"
-                        className="rounded-full bg-blue-600 px-5 py-3 font-semibold text-white shadow-md transition hover:-translate-y-0.5 hover:bg-blue-700"
-                    >
-                        Get started todos for free
-                    </Link>
-                </div>
-            </nav>
+            <Navbar />
 
             <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col gap-8 py-10">
                 <header className="flex flex-col justify-between gap-6 border-b border-white/70 pb-8 sm:flex-row sm:items-end">
@@ -306,71 +275,6 @@ export default function TodoPage() {
                     </div>
                 </section>
             </div>
-
-            <style jsx>{`
-                .dot-bg {
-                    position: absolute;
-                    inset: 0;
-                    background-image: radial-gradient(
-                        rgba(15, 23, 42, 0.13) 1px,
-                        transparent 1px
-                    );
-                    background-size: 22px 22px;
-                    animation: dotMove 7s linear infinite;
-                    opacity: 0.55;
-                }
-
-                .floating-blur {
-                    position: absolute;
-                    border-radius: 9999px;
-                    filter: blur(70px);
-                    animation: floatMove 5s ease-in-out infinite alternate;
-                }
-
-                .floating-1 {
-                    width: 280px;
-                    height: 280px;
-                    top: 18%;
-                    left: 10%;
-                    background: rgba(96, 165, 250, 0.45);
-                }
-
-                .floating-2 {
-                    width: 340px;
-                    height: 340px;
-                    right: 8%;
-                    bottom: 14%;
-                    background: rgba(216, 180, 254, 0.5);
-                    animation-duration: 6s;
-                }
-
-                .floating-3 {
-                    width: 240px;
-                    height: 240px;
-                    right: 35%;
-                    top: 22%;
-                    background: rgba(244, 114, 182, 0.28);
-                    animation-duration: 4.5s;
-                }
-
-                @keyframes dotMove {
-                    from {
-                        background-position: 0 0;
-                    }
-                    to {
-                        background-position: 44px 44px;
-                    }
-                }
-
-                @keyframes floatMove {
-                    from {
-                        transform: translateY(0) translateX(0) scale(1);
-                    }
-                    to {
-                        transform: translateY(35px) translateX(28px) scale(1.06);
-                    }
-                }
-            `}</style>
         </main>
     );
 }
